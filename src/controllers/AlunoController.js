@@ -9,17 +9,8 @@ class AlunoController {
             pageSize ||= 10;
             orderBy ||= "id";
             order ||= "asc";
-
-            if (order !== "asc" && order !== "desc") {
-                order = "asc";
-            }
-
-            const resultado = await alunoService.findMany(
-                page,
-                pageSize,
-                orderBy,
-                order
-            );
+            
+            const resultado = await alunoService.findMany(page, pageSize, orderBy, order);
 
             return response.status(200).json(resultado);
         } catch(e){

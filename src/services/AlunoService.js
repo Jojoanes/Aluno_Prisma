@@ -6,22 +6,22 @@ class AlunoService {
 
     async findMany(page, pageSize, orderBy, order) {
         //SELECT * FROM alunos
-
+        
         page = Number(page);
         pageSize = Number(pageSize);
-        if(!page || !page < 1 || !pageSize || !pageSize < 1){
+
+        if(page < 1 || pageSize < 1){
             throw new PaginacaoInvalidaError();
         }
-
         const alunos = await prisma.aluno.findMany({
             skip: (page - 1) * pageSize,
-            take: pageSize,
+            take: Number(pageSize),
             orderBy: {
                 [orderBy]: order
             }
         });
 
-        const total = await prisma.aluno.count();
+        const total = await prisma.aluno.count()
 
         return { alunos, total };
     }
@@ -30,7 +30,7 @@ class AlunoService {
         //create = insert
         //update = update
         //delete = delete
-        //findMany = select *
+        //findMany = select * from
 
         const {nome, email} = aluno;
         if(!nome || !email){
